@@ -12,7 +12,7 @@ import Foundation
 public struct SegmentModel {
 
     /// Segmente item title
-    var title: String?
+    public var title: String?
 
     /// Image name located in asset catalog
     var imageName: String?
