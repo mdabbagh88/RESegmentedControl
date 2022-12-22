@@ -115,7 +115,9 @@ open class RESegmentedControl: UIControl {
     /// Segment items, models that will be used inside segments
     ///
     /// Should be added in configure method
-    var segmentItems: [SegmentModel] = [SegmentModel]()
+    public var segmentItems: [SegmentModel] = [SegmentModel]()
+    
+    var isUserSelection = false
 
     /// Selected segment index
     public var selectedSegmentIndex: Int = -1 {
@@ -126,7 +128,7 @@ open class RESegmentedControl: UIControl {
                 canCollectionViewUpdateLayout = true
                 guard segmentItems.count != 0,
                     selectedSegmentIndex != -1,
-                    selectedSegmentIndex < segmentItems.count else { return }
+                    selectedSegmentIndex < segmentItems.count, isUserSelection else { return }
                 DispatchQueue.main.async {
                     self.sendActions(for: .valueChanged)
                 }
@@ -373,7 +375,9 @@ extension RESegmentedControl: UICollectionViewDataSource {
 extension RESegmentedControl: UICollectionViewDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        isUserSelection = true
         selectedSegmentIndex = indexPath.row
+        isUserSelection = false
     }
 
     public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
